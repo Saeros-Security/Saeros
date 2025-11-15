@@ -1,0 +1,115 @@
+﻿namespace Collector.Tests.Conversion.Rules;
+
+public class DetectionRule : IConversionRule
+{
+    public string Yaml { get; } = @"title: Microsoft Defender security components disabled (command)
+description: Detects scenarios where an attacker attempts to disable Defender security features
+references:
+- https://github.com/mdecrevoisier/EVTX-to-MITRE-Attack/tree/master/TA0005-Defense%20Evasion/T1562.001-Impair%20Defenses-Disable%20or%20Modify%20tool
+- https://github.com/swagkarna/Defeat-Defender-V1.2
+- https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2019-ps
+- https://docs.microsoft.com/en-us/windows/client-management/mdm/defender-csp
+- https://powershell.one/wmi/root/microsoft/windows/defender/msft_mppreference
+- https://gist.github.com/pe3zx/7c5e0080c3b0869ccba1f1dc2ea0c5e0
+- https://cloudbrothers.info/en/current-limits-defender-av-tamper-protection/
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+author: mdecrevoisier
+status: experimental
+date: 06/04/2025
+logsource:
+  product: windows
+  category: process_creation
+detection: # Set-MpPreference -DisableArchiveScanning $true
+  selection:
+    EventID: 4688
+    EventData|contains|all:
+      - Set-MpPreference
+      - Add-MpPreference
+    CommandLine|contains:
+      - '1'
+      - '$true'
+    CommandLine|contains:
+      # Scanning features
+      - DisableArchiveScanning
+      - DisableRemovableDriveScanning
+      - DisableScanningMappedNetworkDrivesForFullScan
+      - DisableScanningNetworkFiles
+      - DisableRestorePoint
+      - DisableScriptScanning
+      - DisableEmailScanning
+      # Parsing features
+      - DisableDnsParsing
+      - DisableDnsOverTcpParsing
+      - DisableSshParsing
+      - DisableTlsParsing
+      - DisableHttpParsing
+      - DisableRdpParsing
+      # Misc features
+      - DisableAutoExclusions
+      - DisableBlockAtFirstSeen
+      - DisableCpuThrottleOnIdleScans
+      - DisableDatagramProcessing
+      - SignatureDisableUpdateOnStartupWithoutEngine
+  condition: selection
+falsepositives:
+- None
+level: medium";
+
+    public string Conversion { get; } = @"title: Microsoft Defender security components disabled (command)
+id: 279609dd-5c49-4ddd-d838-3e0b359d2f64
+description: Detects scenarios where an attacker attempts to disable Defender security features
+references:
+- https://github.com/mdecrevoisier/EVTX-to-MITRE-Attack/tree/master/TA0005-Defense%20Evasion/T1562.001-Impair%20Defenses-Disable%20or%20Modify%20tool
+- https://github.com/swagkarna/Defeat-Defender-V1.2
+- https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2019-ps
+- https://docs.microsoft.com/en-us/windows/client-management/mdm/defender-csp
+- https://powershell.one/wmi/root/microsoft/windows/defender/msft_mppreference
+- https://gist.github.com/pe3zx/7c5e0080c3b0869ccba1f1dc2ea0c5e0
+- https://cloudbrothers.info/en/current-limits-defender-av-tamper-protection/
+tags:
+- attack.defense-evasion
+- attack.t1562.001
+author: mdecrevoisier
+status: experimental
+date: 06/04/2025
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  process_creation:
+    EventID: 4688
+    Channel: Security
+  selection:
+    EventID: 4688
+    EventData|contains|all:
+    - Set-MpPreference
+    - Add-MpPreference
+    CommandLine|contains:
+    - DisableArchiveScanning
+    - DisableRemovableDriveScanning
+    - DisableScanningMappedNetworkDrivesForFullScan
+    - DisableScanningNetworkFiles
+    - DisableRestorePoint
+    - DisableScriptScanning
+    - DisableEmailScanning
+    - DisableDnsParsing
+    - DisableDnsOverTcpParsing
+    - DisableSshParsing
+    - DisableTlsParsing
+    - DisableHttpParsing
+    - DisableRdpParsing
+    - DisableAutoExclusions
+    - DisableBlockAtFirstSeen
+    - DisableCpuThrottleOnIdleScans
+    - DisableDatagramProcessing
+    - SignatureDisableUpdateOnStartupWithoutEngine
+  condition: process_creation and selection
+falsepositives:
+- None
+level: medium
+ruletype: Sigma
+---
+";
+}

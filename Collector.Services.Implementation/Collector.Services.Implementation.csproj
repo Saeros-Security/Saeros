@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <LangVersion>preview</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugSymbols>False</DebugSymbols>
+        <DebugType>None</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <MaxMindGeoIpCountries>https://git.io/GeoLite2-Country.mmdb</MaxMindGeoIpCountries>
+        <MaxMindGeoIpASN>https://git.io/GeoLite2-ASN.mmdb</MaxMindGeoIpASN>
+    </PropertyGroup>
+
+    <Target Name="DownloadGeoLite2Countries" BeforeTargets="BeforeBuild">
+        <DownloadFile SourceUrl="$(MaxMindGeoIpCountries)" DestinationFolder="$(MSBuildProjectDirectory)">
+            <Output TaskParameter="DownloadedFile" ItemName="Content" />
+        </DownloadFile>
+    </Target>
+
+    <Target Name="DownloadGeoLite2ASN" BeforeTargets="BeforeBuild">
+        <DownloadFile SourceUrl="$(MaxMindGeoIpASN)" DestinationFolder="$(MSBuildProjectDirectory)">
+            <Output TaskParameter="DownloadedFile" ItemName="Content" />
+        </DownloadFile>
+    </Target>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Collector.Databases.Implementation\Collector.Databases.Implementation.csproj" />
+      <ProjectReference Include="..\Collector.Services.Abstractions\Collector.Services.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+      <PackageReference Include="MaxMind.Db" Version="4.2.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+      <PackageReference Include="PeNet" Version="5.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="countries.csv" />
+      <EmbeddedResource Include="GeoLite2-ASN.mmdb" />
+      <EmbeddedResource Include="GeoLite2-Country.mmdb" />
+    </ItemGroup>
+
+</Project>

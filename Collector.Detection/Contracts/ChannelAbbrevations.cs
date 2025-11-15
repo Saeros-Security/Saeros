@@ -1,0 +1,9 @@
+﻿using System.Text.Json.Serialization;
+
+namespace Collector.Detection.Contracts;
+
+[method: JsonConstructor]
+public sealed class ChannelAbbrevations(IDictionary<string, string> items)
+{
+    public IDictionary<string, string> Items { get; } = items;
+}
