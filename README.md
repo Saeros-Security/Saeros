@@ -68,7 +68,7 @@ In a domain-joined environment, the installer detects domain membership and can 
 
 Deployment must be performed by a user in the **Builtin Administrators** group. The password is not stored and is used only to establish SMB/LDAP connections during deployment.
 
-The following ports must be open, and firewall rules must allow connections from the *Console* to the primary domain controller:
+The following ports must be open, and firewall rules must allow connections from the *Saeros Collector (Bridge)* service to the primary domain controller:
 
 - **TCP/445**
 - **TCP/389** (or **TCP/686** for LDAPS)
