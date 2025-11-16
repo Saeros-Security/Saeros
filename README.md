@@ -40,11 +40,11 @@ Saeros can detect thousands of suspicious activities, including:
 
 ## Deployment
 
-Saeros can be deployed on a standalone Microsoft Windows endpoint or across Microsoft Active Directory domains. The setup installs two Windows services and a desktop application.
+Saeros can be deployed on a standalone Microsoft Windows endpoint and across Microsoft Active Directory domains. The setup installs two Windows services and a desktop application.
 
-**Saeros Collector (Agent)** – A Windows service that starts automatically with the system. It configures audit policies, subscribes to ETW channels, performs Sigma rule matching, and forwards detections to the *Bridge*. For simplicity, this service is referred to as the *Agent*. It usually sits on standalone Windows workstation or on domain controllers.
+**Saeros Collector (Agent)** – A Windows service that starts automatically with the system. It configures audit policies, subscribes to ETW channels, performs Sigma rule matching, and forwards detections to the *Bridge*. For simplicity, this service is referred to as the *Agent*. It usually sits on a standalone Windows workstation or on domain controllers.
 
-**Saeros Collector (Bridge)** – A Windows service that also starts automatically with the system. It communicates with the *Agent*, manages Sigma rule configuration, stores detections in a local SQLite database, and forwards them to configured SIEMs. The *Bridge* exposes an API used by the *Console*. It usually sits on the local installation (where the installer was run).
+**Saeros Collector (Bridge)** – A Windows service that also starts automatically with the system. It communicates with the *Agent*, manages Sigma rule configuration, stores detections in a local SQLite database, and forwards them to configured SIEMs. The *Bridge* exposes an API consumed by the *Console*. It usually sits on the local installation (where the installer was run).
 
 **Saeros Console** – A Windows desktop application used to manage Sigma rules and exclusions, browse detections, configure integrations, and deploy collectors to Active Directory domains. It usually sits on the local installation (where the installer was run).
 
@@ -62,7 +62,7 @@ This is the simplest setup: no network or firewall configuration is required, an
 
 ### Domain-Joined Environment
 
-In a domain-joined environment, the installer detects domain membership and can deploy an *Agent* to each domain controller during setup. Deployment occurs via a Group Policy Object (GPO). Each *Agent* forwards detections through a gRPC named pipe to the local *Saeros Collector (Bridge)* service (where the installer was run).
+In a domain-joined environment, the installer detects domain membership and can deploy an *Agent* to each domain controller during setup. Deployment occurs via a Group Policy Object (GPO). Each *Agent* forwards detections back to the primary domain controller through a gRPC named pipe, then to the local *Saeros Collector (Bridge)* service (where the installer was run).
 
 #### Requirements
 
