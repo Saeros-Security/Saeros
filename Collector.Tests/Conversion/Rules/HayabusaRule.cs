@@ -1,0 +1,132 @@
+﻿namespace Collector.Tests.Conversion.Rules;
+
+public class HayabusaRule : IConversionRule
+{
+    public string Yaml { get; } = @"author: Zach Mathis
+date: 2022/03/23
+modified: 2023/01/13
+
+title: 'Reg Key Value Set (Noisy)'
+description: |
+    This Registry event type identifies Registry value modifications. The event records the value written for Registry values of type DWORD and QWORD.
+    Marked as noisy by default.
+
+id: 9f5663ce-6205-4753-b486-fb8498d1fae5
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: sysmon
+    definition: 'Sysmon needs to be installed and configured.'
+detection:
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 13
+    selection_no_alerts:
+        - RuleName: ''
+        - RuleName: '-'
+    condition: selection_basic and selection_no_alerts
+falsepositives:
+tags:
+    - sysmon
+references:
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+
+sample-evtx: |
+    <Event xmlns=""http://schemas.microsoft.com/win/2004/08/events/event"">
+        <System>
+            <Provider Name=""Microsoft-Windows-Sysmon"" Guid=""{5770385F-C22A-43E0-BF4C-06F5698FFBD9}""/>
+            <EventID>13</EventID>
+            <Version>2</Version>
+            <Level>4</Level>
+            <Task>13</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime=""2022-02-19T17:35:16.316731500Z""/>
+            <EventRecordID>1986639</EventRecordID>
+            <Correlation/>
+            <Execution ProcessID=""2320"" ThreadID=""3120""/>
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+            <Computer>DESKTOP-TTEQ6PR</Computer>
+            <Security UserID=""S-1-5-18""/>
+        </System>
+        <EventData>
+            <Data Name=""RuleName"">-</Data>
+            <Data Name=""EventType"">SetValue</Data>
+            <Data Name=""UtcTime"">2022-02-19 17:35:16.311</Data>
+            <Data Name=""ProcessGuid"">{08DA6306-C703-6210-2700-000000001000}</Data>
+            <Data Name=""ProcessId"">1896</Data>
+            <Data Name=""Image"">C:\Windows\System32\spoolsv.exe</Data>
+            <Data Name=""TargetObject"">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\Microsoft XPS Document Writer v4\CopyFiles\Module</Data>
+            <Data Name=""Details"">C:\Windows\system32\spool\DRIVERS\x64\4\Test.dll</Data>
+            <Data Name=""User"">NT AUTHORITY\SYSTEM</Data>
+        </EventData>
+    </Event>";
+
+    public string Conversion { get; } = @"title: Reg Key Value Set (Noisy)
+id: 552638b1-5c2d-3eae-667b-0bccc3cbae73
+author: Zach Mathis
+date: 2022/03/23
+modified: 2023/01/13
+description: >
+  This Registry event type identifies Registry value modifications. The event records the value written for Registry values of type DWORD and QWORD.
+
+  Marked as noisy by default.
+related:
+- id: 9f5663ce-6205-4753-b486-fb8498d1fae5
+- type: derived
+level: informational
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+  definition: Sysmon needs to be installed and configured.
+detection:
+  sysmon:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  selection_basic:
+    Channel: Microsoft-Windows-Sysmon/Operational
+    EventID: 13
+  selection_no_alerts:
+  - RuleName: ''
+  - RuleName: '-'
+  condition: sysmon and (selection_basic and selection_no_alerts)
+falsepositives: ''
+tags:
+- sysmon
+references:
+- https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+sample-evtx: >-
+  <Event xmlns=""http://schemas.microsoft.com/win/2004/08/events/event"">
+      <System>
+          <Provider Name=""Microsoft-Windows-Sysmon"" Guid=""{5770385F-C22A-43E0-BF4C-06F5698FFBD9}""/>
+          <EventID>13</EventID>
+          <Version>2</Version>
+          <Level>4</Level>
+          <Task>13</Task>
+          <Opcode>0</Opcode>
+          <Keywords>0x8000000000000000</Keywords>
+          <TimeCreated SystemTime=""2022-02-19T17:35:16.316731500Z""/>
+          <EventRecordID>1986639</EventRecordID>
+          <Correlation/>
+          <Execution ProcessID=""2320"" ThreadID=""3120""/>
+          <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+          <Computer>DESKTOP-TTEQ6PR</Computer>
+          <Security UserID=""S-1-5-18""/>
+      </System>
+      <EventData>
+          <Data Name=""RuleName"">-</Data>
+          <Data Name=""EventType"">SetValue</Data>
+          <Data Name=""UtcTime"">2022-02-19 17:35:16.311</Data>
+          <Data Name=""ProcessGuid"">{08DA6306-C703-6210-2700-000000001000}</Data>
+          <Data Name=""ProcessId"">1896</Data>
+          <Data Name=""Image"">C:\Windows\System32\spoolsv.exe</Data>
+          <Data Name=""TargetObject"">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\Microsoft XPS Document Writer v4\CopyFiles\Module</Data>
+          <Data Name=""Details"">C:\Windows\system32\spool\DRIVERS\x64\4\Test.dll</Data>
+          <Data Name=""User"">NT AUTHORITY\SYSTEM</Data>
+      </EventData>
+  </Event>
+ruletype: Sigma
+---
+";
+}

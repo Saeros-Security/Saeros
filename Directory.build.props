@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup>
+		<Version>$([System.DateTime]::UtcNow.ToString(`yyyy`)).$([System.DateTime]::UtcNow.ToString(`MM`)).$([System.DateTime]::UtcNow.ToString(`dd`)).$([System.DateTime]::UtcNow.ToString(`HH`))</Version>
+		<FileVersion>$([System.DateTime]::UtcNow.ToString(`yyyy`)).$([System.DateTime]::UtcNow.ToString(`MM`)).$([System.DateTime]::UtcNow.ToString(`dd`)).$([System.DateTime]::UtcNow.ToString(`HH`))</FileVersion>
+		<InformationalVersion>$([System.DateTime]::UtcNow.ToString(`yyyy`)).$([System.DateTime]::UtcNow.ToString(`MM`))</InformationalVersion>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+		<Copyright>© $([System.DateTime]::Now.Year) Saeros. All rights reserved.</Copyright>
+		<Company>Saeros</Company>
+		<Product>Saeros</Product>
+		<LangVersion>14.0</LangVersion>
+	</PropertyGroup>
+</Project>

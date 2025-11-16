@@ -1,0 +1,30 @@
+﻿using Shared;
+using Shared.Extensions;
+
+namespace Collector.Tests.Serialization.Rules._411ab182_6791_b9e2_733a_9f87c0448035;
+
+public class TestData_Unmatched : TestData
+{
+    public TestData_Unmatched() : base(_411ab182_6791_b9e2_733a_9f87c0448035.YamlRule.Yaml)
+    {
+        var system = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { WinEventExtensions.EventIdKey, "1" },
+            { WinEventExtensions.ChannelKey, "Microsoft-Windows-Sysmon/Operational" },
+            { WinEventExtensions.ProviderNameKey, "Microsoft-Windows-Sysmon" },
+            { WinEventExtensions.ProviderGuidKey, "5770385F-C22A-43E0-BF4C-06F5698FFBD9" },
+            { WinEventExtensions.SystemTimeKey, "2025-01-29T14:45:54.020972Z" },
+            { WinEventExtensions.ComputerKey, "LOCAL" }
+        };
+
+        var eventData = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "OriginalFileName", "6z.exe" },
+            { "CommandLine", " -p" },
+            { "ParentImage", "C:\\ProgramData\\dbg\\nasty.exe" },
+        };
+            
+        Add(new WinEvent(system, eventData));
+        Match = false;
+    }
+}
