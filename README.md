@@ -75,9 +75,10 @@ The following ports must be open, and firewall rules must allow connections from
 
 Deployment creates a GPO with the following components:
 
-- Location:  
+- Protected folder (read-only access for Authenticated Users):  
   **C:\Windows\SYSVOL\domain\Policies\{3560FF19-45A3-4F9A-956B-937A04D2AABF}**
 - A scheduled task that installs the *Saeros Collector (Agent)* service on domain controllers
+- The *Collector.exe* signed binary which is executed by all domain controllers as a Windows service under LocalSystem identity
 - **Audit.csv** containing required audit policies based on configured rules
 - Registry values enabling the required ETW channels
 - ADMX templates that configure PowerShell policies, including:  
@@ -87,6 +88,11 @@ Deployment creates a GPO with the following components:
   *Turn on PowerShell Script Block Logging*
 
 **Note:** Only detections—not full event logs—are sent from the *Agent* to the *Bridge*, significantly reducing bandwidth requirements.
+
+#### Diagrams
+| Standalone           | Active Directory |
+| ------------- | ------------- |
+| <img src="https://github.com/user-attachments/assets/4b5119d3-0302-4605-bf3e-0abd52e56ad5" data-canonical-src="https://github.com/user-attachments/assets/4b5119d3-0302-4605-bf3e-0abd52e56ad5" width="500" />  | <img src="https://github.com/user-attachments/assets/652dbdde-746c-47fc-bf93-758fa83c1b11" data-canonical-src="https://github.com/user-attachments/assets/652dbdde-746c-47fc-bf93-758fa83c1b11" width="500" />  |
 
 ## Installation
 
