@@ -83,7 +83,7 @@ Deployment must be performed by a user in the **Builtin Administrators** group. 
 The following ports must be open, and firewall rules must allow connections from the *Saeros Collector (Bridge)* service to the primary domain controller:
 
 - **TCP/445**
-- **TCP/389** (or **TCP/686** for LDAPS)
+- **TCP/389** (or **TCP/636** for LDAPS)
 
 Deployment creates a GPO with the following components:
 
