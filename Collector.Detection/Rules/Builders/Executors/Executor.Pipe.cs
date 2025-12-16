@@ -485,28 +485,28 @@ internal static partial class Executor
             if (modifier.Equals(Constants.Re, StringComparison.Ordinal))
             {
                 if (value == null) return true;
-                result = Regex.IsMatch(input: value, pattern: expectedValue);
+                result = Regex.IsMatch(input: value, pattern: Regex.Escape(expectedValue));
                 return true;
             }
         
             if (modifier.Equals(Constants.ReI, StringComparison.Ordinal))
             {
                 if (value == null) return true;
-                result = Regex.IsMatch(input: value, pattern: expectedValue, RegexOptions.IgnoreCase);
+                result = Regex.IsMatch(input: value, pattern: Regex.Escape(expectedValue), RegexOptions.IgnoreCase);
                 return true;
             }
         
             if (modifier.Equals(Constants.ReM, StringComparison.Ordinal))
             {
                 if (value == null) return true;
-                result = Regex.IsMatch(input: value, pattern: expectedValue, RegexOptions.Multiline);
+                result = Regex.IsMatch(input: value, pattern: Regex.Escape(expectedValue), RegexOptions.Multiline);
                 return true;
             }
         
             if (modifier.Equals(Constants.ReS, StringComparison.Ordinal))
             {
                 if (value == null) return true;
-                result = Regex.IsMatch(input: value, pattern: expectedValue, RegexOptions.Singleline);
+                result = Regex.IsMatch(input: value, pattern: Regex.Escape(expectedValue), RegexOptions.Singleline);
                 return true;
             }
         }
