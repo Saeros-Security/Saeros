@@ -36,10 +36,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
-      <PackageReference Include="MaxMind.Db" Version="4.3.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-      <PackageReference Include="PeNet" Version="5.1.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.80.0" />
+      <PackageReference Include="MaxMind.Db" Version="5.1.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+      <PackageReference Include="PeNet" Version="6.1.2" />
     </ItemGroup>
 
     <ItemGroup>

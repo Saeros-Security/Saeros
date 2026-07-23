@@ -18,12 +18,12 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
-    <PackageReference Include="Polly" Version="8.6.5" />
-    <PackageReference Include="SMBLibrary" Version="1.5.5.1" />
-    <PackageReference Include="System.DirectoryServices" Version="10.0.0" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.0" />
-    <PackageReference Include="Vanara.PInvoke.NetApi32" Version="4.2.1" />
-    <PackageReference Include="YAXLib" Version="4.3.0" />
+    <PackageReference Include="Polly" Version="8.7.0" />
+    <PackageReference Include="SMBLibrary" Version="1.5.7.1" />
+    <PackageReference Include="System.DirectoryServices" Version="10.0.10" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.10" />
+    <PackageReference Include="Vanara.PInvoke.NetApi32" Version="5.0.5" />
+    <PackageReference Include="YAXLib" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
